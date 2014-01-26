@@ -7,16 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SubChessView.h"
 
 @interface UIView_Chess : UIView
 {
-    int iRow;
-    int icolumn;
-    UIImageView* imgChess;
 }
-@property (nonatomic,retain) UIImageView* imgChess;
 
-- (void) addChess: (NSInteger)type imgurl:(NSString*)url;
-- (void) removeChess;
+- (void) CreateChess:(int)left top:(int)top row:(int)row column:(int)column hight:(int)hight width:(int)width;
 
+- (void) addChess:(UIView*)view imgUrl:(NSString*)imgurl;
+- (void) removeChess:(UIView*)view;
+
+- (int) getRow:(UIView*)view;
+- (int) getColumn:(UIView*)view;
 @end

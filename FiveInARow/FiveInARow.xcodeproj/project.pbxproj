@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		5F0CB35B1894BD1700303761 /* UIView_Chess.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0CB35A1894BD1700303761 /* UIView_Chess.m */; };
+		5F3FA6E41894FC6F000D8CCB /* SubChessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3FA6E31894FC6F000D8CCB /* SubChessView.m */; };
 		5FEA6A2018923310004642E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEA6A1F18923310004642E9 /* Foundation.framework */; };
 		5FEA6A2218923310004642E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEA6A2118923310004642E9 /* CoreGraphics.framework */; };
 		5FEA6A2418923310004642E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEA6A2318923310004642E9 /* UIKit.framework */; };
@@ -39,6 +40,8 @@
 /* Begin PBXFileReference section */
 		5F0CB3591894BD1700303761 /* UIView_Chess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIView_Chess.h; sourceTree = "<group>"; };
 		5F0CB35A1894BD1700303761 /* UIView_Chess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIView_Chess.m; sourceTree = "<group>"; };
+		5F3FA6E21894FC6F000D8CCB /* SubChessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubChessView.h; sourceTree = "<group>"; };
+		5F3FA6E31894FC6F000D8CCB /* SubChessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubChessView.m; sourceTree = "<group>"; };
 		5FEA6A1C18923310004642E9 /* FiveInARow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FiveInARow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEA6A1F18923310004642E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5FEA6A2118923310004642E9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -129,6 +132,8 @@
 				5FEA6A541892340B004642E9 /* FiveInARow.xib */,
 				5F0CB3591894BD1700303761 /* UIView_Chess.h */,
 				5F0CB35A1894BD1700303761 /* UIView_Chess.m */,
+				5F3FA6E21894FC6F000D8CCB /* SubChessView.h */,
+				5F3FA6E31894FC6F000D8CCB /* SubChessView.m */,
 			);
 			path = FiveInARow;
 			sourceTree = "<group>";
@@ -270,6 +275,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5F3FA6E41894FC6F000D8CCB /* SubChessView.m in Sources */,
 				5FEA6A3618923310004642E9 /* ViewController.m in Sources */,
 				5FEA6A3018923310004642E9 /* AppDelegate.m in Sources */,
 				5FEA6A2C18923310004642E9 /* main.m in Sources */,

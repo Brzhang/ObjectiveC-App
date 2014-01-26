@@ -16,27 +16,43 @@
     if (self) {
         // Initialization code
     }
-    
-    imgChess = nil;
-    
     return self;
 }
 
-- (void) addChess: (NSInteger)type imgurl:(NSString*)url
+- (void) CreateChess:(int)left top:(int)top row:(int)row column:(int)column hight:(int)hight width:(int)width
 {
-    if (imgChess != nil) {
-        return;
+    [self initWithFrame:CGRectMake(left, top, width*row, hight*column)];
+    
+    for (int i = 0; i < row; ++i)
+    {
+        for (int j = 0; j < row; ++j)
+        {
+            SubChessView *view = [[SubChessView alloc] initWithFrame:CGRectMake(hight * i, hight * j, width, hight)];
+            [view setCoordinate:i y:j];
+            
+            view.backgroundColor = ((i + j) & 0x1) ? [UIColor lightGrayColor] : [UIColor grayColor];
+            [self addSubview:view];
+        }
     }
-    
-    imgChess = [[UIImageView alloc]initWithImage:[UIImage imageNamed:url]];
-    
-    [self addSubview:imgChess];
 }
 
-- (void) removeChess
+- (void) addChess:(UIView*)view imgUrl:(NSString*)imgurl
 {
-    [imgChess removeFromSuperview];
-    imgChess = nil;
+    [(SubChessView*)view addChess:imgurl];
+}
+
+- (void) removeChess:(UIView*)view
+{
+    [(SubChessView*)view removeChess];
+}
+
+- (int) getRow:(UIView*)view
+{
+    return [(SubChessView*)view iRow];
+}
+- (int) getColumn:(UIView*)view
+{
+    return [(SubChessView*)view iColumn];
 }
 
 /*

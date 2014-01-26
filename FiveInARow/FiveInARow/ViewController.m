@@ -7,12 +7,15 @@
 //
 
 #import "ViewController.h"
+#import "UIView_Chess.h"
 
 @interface ViewController ()
 
 @end
 
 @implementation ViewController
+@synthesize viewchess;
+
 
 #define iRow  10
 #define iLineHigh 32
@@ -27,20 +30,20 @@ int iOwner;
     CGRect rect = [[UIScreen mainScreen] bounds];
   
     iOwner = 0;
+  
+    viewchess = [UIView_Chess alloc];
+    [viewchess CreateChess:0 top:(rect.size.height-iRow*iLineHigh)/2 row:iRow column:iRow hight:iLineHigh width:iLineHigh];
+    [self.view addSubview:viewchess];
     
-    for (int i = 0; i < iRow; ++i)
+    for (int i=0; i<iRow; ++i)
     {
-        for (int j = 0; j < iRow; ++j)
-        {
-            UIView *view = [[UIView alloc] initWithFrame:CGRectMake(iLineHigh * i, (rect.size.height-iLineHigh*iRow)/2 + iLineHigh * j, iLineHigh, iLineHigh)];
-            view.backgroundColor = ((i + j) & 0x1) ? [UIColor lightGrayColor] : [UIColor grayColor];
-            [self.view addSubview:view];
+        for (int j=0; j<iRow; ++j) {
             iMatrix[i][j] = 0;
         }
     }
 }
 
-- (void) addPoint: (CGRect)rect type:(NSInteger)type
+- (void) addPoint:(UIView*)view type:(NSInteger)type
 {
     NSString *strPoint = nil;
     if (type == 0)
@@ -52,17 +55,10 @@ int iOwner;
         strPoint = @"black.png";
     }
     
+    [viewchess addChess:view imgUrl:strPoint];
     
-    UIImageView * point = [[UIImageView alloc]initWithImage:[UIImage imageNamed:strPoint]];
-    point.frame = CGRectMake(rect.origin.x, rect.origin.y, rect.size.width, rect.size.height);
-    
-    [self.view addSubview:point];
-    
-    int x = rect.origin.x;
-    int y = rect.origin.y;
-    
-    int i = x/iLineHigh;
-    int j = (y - (rect.size.height-iLineHigh*iRow)/2)/iLineHigh;
+    int i = [viewchess getRow:view];
+    int j = [viewchess getColumn:view];
     
     if (type == 0)
     {
@@ -95,56 +91,56 @@ int iOwner;
 - (void) CountWar: (NSInteger)x y:(NSInteger)y
 {
     int iSum = 0;
-    if (x - 5 >= 0) {
+    if (x - 4 >= 0) {
         
         for(int i = 0; i < 5; ++i)
             iSum += iMatrix[x-i][y];
     }
     [self assertWinner:&iSum];
     
-    if (x + 5 <= iRow) {
+    if (x + 4 < iRow) {
         
         for(int i = 0; i < 5; ++i)
             iSum += iMatrix[x+i][y];
     }
     [self assertWinner:&iSum];
     
-    if (y - 5 >= 0) {
+    if (y - 4 >= 0) {
         
         for(int i = 0; i < 5; ++i)
             iSum += iMatrix[x][y-i];
     }
     [self assertWinner:&iSum];
 
-    if (y + 5 <= iRow) {
+    if (y + 4 < iRow) {
         
         for(int i = 0; i < 5; ++i)
             iSum += iMatrix[x][y+i];
     }
     [self assertWinner:&iSum];
     
-    if (x-5>=0 && y-5>=0) {
+    if (x-4>=0 && y-4>=0) {
         for(int i = 0; i < 5; ++i)
             iSum += iMatrix[x-i][y-i];
 
     }
     [self assertWinner:&iSum];
     
-    if (x-5>=0 && y+5<=iLineHigh) {
+    if (x-4>=0 && y+4<iLineHigh) {
         for(int i = 0; i < 5; ++i)
             iSum += iMatrix[x-i][y+i];
         
     }
     [self assertWinner:&iSum];
     
-    if (x+5<=iLineHigh && y-5>=0) {
+    if (x+4<iLineHigh && y-4>=0) {
         for(int i = 0; i < 5; ++i)
             iSum += iMatrix[x+i][y-i];
         
     }
     [self assertWinner:&iSum];
     
-    if (x+5<=iLineHigh && y+5<=iLineHigh) {
+    if (x+4<iLineHigh && y+4<iLineHigh) {
         for(int i = 0; i < 5; ++i)
             iSum += iMatrix[x+i][y+i];
         
@@ -162,11 +158,11 @@ int iOwner;
     {
         if (iOwner & 0x1)
         {
-            [self addPoint:touch.view.frame type:0];
+            [self addPoint:touch.view type:0];
         }
         else
         {
-            [self addPoint:touch.view.frame type:1];
+            [self addPoint:touch.view type:1];
         }
         ++iOwner;
     }
@@ -187,18 +183,28 @@ int iOwner;
     return TRUE;
 }
 
+- (NSUInteger) supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskAll;
+}
+
 -(void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
-    for (UIView *View in [self.view subviews])
-    {
-        int x = View.frame.origin.x;
-        int y = View.frame.origin.y;
-        int width = View.frame.size.width;
-        int height = View.frame.size.height;
+   if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation))
+   {
+       for (UIView *View in [self.view subviews])
+       {
+           if (View.tag == 100)
+           {
+               int x = View.frame.origin.x;
+               int y = View.frame.origin.y;
+               int width = View.frame.size.width;
+               int height = View.frame.size.height;
         
-        View.frame = CGRectMake(y, x, width, height);
+               View.frame = CGRectMake(y, x, width, height);
+           }
+       }
     }
-    
 }
 
 @end

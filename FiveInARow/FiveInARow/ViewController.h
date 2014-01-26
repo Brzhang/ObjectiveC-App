@@ -7,9 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "UIView_Chess.h"
 
 @interface ViewController : UIViewController
-{}
+{
+    UIView_Chess* viewchess;
+}
+@property (nonatomic,retain) UIView_Chess* viewchess;
 
 - (void) assertWinner: (int*)iSum;
 - (void) CountWar: (NSInteger)x y:(NSInteger)y;
