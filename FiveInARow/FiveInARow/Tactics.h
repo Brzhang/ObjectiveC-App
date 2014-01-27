@@ -26,8 +26,9 @@ typedef enum
 @property (nonatomic)int m_iColumn;
 
 - (bool) Init:(int)row column:(int)column;
-- (winner) assertWinner: (int*)iSum;
+- (winner) assertWinner: (int)iSum;
 - (winner) CountWar: (int)x y:(int)y;
 - (void) setMatrixValue: (int)x y:(int)y value:(int)value;
 - (void) clearMatrix;
+//- (bool) DoubleThree:(int)x y:(int)y value:(int)value;
 @end

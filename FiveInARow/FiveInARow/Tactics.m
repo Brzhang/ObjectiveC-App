@@ -49,104 +49,102 @@
     m_iMatrix[x][y] = value;
 }
 
-- (winner) assertWinner: (int*)iSum
+- (winner) assertWinner: (int)iSum
 {
-    if (*iSum == 5)
+    if (iSum >= 5)
     {
-        *iSum = 0;
         return WHITEWIN;
     }
-    else if(*iSum == -5)
+    else if(iSum <= -5)
     {
-        *iSum = 0;
         return BLACKWIN;
     }
-    *iSum = 0;
     return NOWIN;
 }
 
 - (winner) CountWar: (NSInteger)x y:(NSInteger)y
 {
     int iSum = 0;
+    int iOldSum = 0;
     winner win;
-    if (x - 4 >= 0) {
-        
-        for(int i = 0; i < 5; ++i)
-            iSum += m_iMatrix[x-i][y];
-    }
-    win = [self assertWinner:&iSum];
-    if (win != NOWIN) {
-        return win;
-    }
-    
-    if (x + 4 < m_iRow) {
-        
-        for(int i = 0; i < 5; ++i)
-            iSum += m_iMatrix[x+i][y];
-    }
-    win = [self assertWinner:&iSum];
-    if (win != NOWIN) {
-        return win;
+    //count the subarray if the sum of subarray is 5 or -5 mean the winner been found.
+    //row
+    for (int i = 0; i<m_iRow; ++i)
+    {
+        iSum+=m_iMatrix[i][y];
+        win = [self assertWinner:iSum];
+        if (win != NOWIN) {
+            return win;
+        }
+        if (abs(iSum) < abs(iOldSum)) {
+            iSum = 0;
+            --i;
+        }
+        iOldSum = iSum;
     }
     
-    if (y - 4 >= 0) {
-        
-        for(int i = 0; i < 5; ++i)
-            iSum += m_iMatrix[x][y-i];
-    }
-    win = [self assertWinner:&iSum];
-    if (win != NOWIN) {
-        return win;
-    }
-    
-    if (y + 4 < m_iRow) {
-        
-        for(int i = 0; i < 5; ++i)
-            iSum += m_iMatrix[x][y+i];
-    }
-    win = [self assertWinner:&iSum];
-    if (win != NOWIN) {
-        return win;
+    //column
+    iSum = iOldSum = 0;
+    for (int i = 0; i<m_iColumn; ++i)
+    {
+        iSum+=m_iMatrix[x][i];
+        win = [self assertWinner:iSum];
+        if (win != NOWIN) {
+            return win;
+        }
+        if (abs(iSum) < abs(iOldSum)) {
+            iSum = 0;
+            --i;
+        }
+        iOldSum = iSum;
     }
     
-    if (x-4>=0 && y-4>=0) {
-        for(int i = 0; i < 5; ++i)
-            iSum += m_iMatrix[x-i][y-i];
-        
+    //X
+    iSum = iOldSum = 0;
+    int i = x;
+    int j = y;
+    while (i>0 && j>0) {
+        --i;
+        --j;
     }
-    win = [self assertWinner:&iSum];
-    if (win != NOWIN) {
-        return win;
-    }
-    
-    if (x-4>=0 && y+4<m_iColumn) {
-        for(int i = 0; i < 5; ++i)
-            iSum += m_iMatrix[x-i][y+i];
-        
-    }
-    win = [self assertWinner:&iSum];
-    if (win != NOWIN) {
-        return win;
-    }
-    
-    if (x+4<m_iColumn && y-4>=0) {
-        for(int i = 0; i < 5; ++i)
-            iSum += m_iMatrix[x+i][y-i];
-        
-    }
-    win = [self assertWinner:&iSum];
-    if (win != NOWIN) {
-        return win;
+    while (i<m_iRow && j<m_iColumn)
+    {
+        iSum+=m_iMatrix[i][j];
+        win = [self assertWinner:iSum];
+        if (win != NOWIN) {
+            return win;
+        }
+        if (abs(iSum) < abs(iOldSum)) {
+            iSum = 0;
+            --i;
+        }
+        iOldSum = iSum;
+        ++i;
+        ++j;
     }
     
-    if (x+4<m_iColumn && y+4<m_iColumn) {
-        for(int i = 0; i < 5; ++i)
-            iSum += m_iMatrix[x+i][y+i];
-        
+    iSum = iOldSum = 0;
+    i = x;
+    j = y;
+    while (i>0 && j<m_iColumn-1) {
+        --i;
+        ++j;
     }
-    win = [self assertWinner:&iSum];
-    if (win != NOWIN) {
-        return win;
+
+    while (i<m_iRow && j>=0)
+    {
+        iSum+=m_iMatrix[i][j];
+        win = [self assertWinner:iSum];
+        if (win != NOWIN) {
+            return win;
+        }
+        if (abs(iSum) < abs(iOldSum)) {
+            iSum = 0;
+            --i;
+        }
+        iOldSum = iSum;
+        ++i;
+        --j;
     }
     return NOWIN;
 }

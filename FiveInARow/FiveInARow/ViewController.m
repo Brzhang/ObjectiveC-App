@@ -50,14 +50,14 @@ bool bfinished;
         case WHITEWIN:
         {
             bfinished = true;
-            UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"白子胜。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"Black Win。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
             break;
         }            
         case BLACKWIN:
         {
             bfinished = true;
-            UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"黑子胜。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"White Win。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
             break;
         }
@@ -71,11 +71,12 @@ bool bfinished;
     NSString *strPoint = nil;
     if (iOwner & 0x1)
     {
-        strPoint = @"black.png";
+        strPoint = @"white.png";
+
     }
     else
     {
-        strPoint = @"white.png";
+        strPoint = @"black.png";
     }
     
     if ([viewchess addChess:view imgUrl:strPoint])
