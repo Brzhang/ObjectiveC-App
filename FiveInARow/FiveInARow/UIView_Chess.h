@@ -20,4 +20,5 @@
 
 - (int) getRow:(UIView*)view;
 - (int) getColumn:(UIView*)view;
+- (void) clearChess;
 @end

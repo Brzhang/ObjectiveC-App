@@ -15,12 +15,15 @@
 
 @implementation ViewController
 @synthesize viewchess;
+@synthesize btnReStart;
+@synthesize btnExit;
 
 
 #define iRow  10
 #define iLineHigh 32
 int iMatrix[iRow][iRow];
 int iOwner;
+bool bfinished;
 
 - (void)viewDidLoad
 {
@@ -30,10 +33,12 @@ int iOwner;
     CGRect rect = [[UIScreen mainScreen] bounds];
   
     iOwner = 0;
-  
+    bfinished = false;
+    
     viewchess = [UIView_Chess alloc];
     [viewchess CreateChess:0 top:(rect.size.height-iRow*iLineHigh)/2 row:iRow column:iRow hight:iLineHigh width:iLineHigh];
     [self.view addSubview:viewchess];
+    viewchess.tag = 100;
     
     for (int i=0; i<iRow; ++i)
     {
@@ -43,16 +48,16 @@ int iOwner;
     }
 }
 
-- (void) addPoint:(UIView*)view type:(NSInteger)type
+- (void) addPoint:(UIView*)view
 {
     NSString *strPoint = nil;
-    if (type == 0)
+    if (iOwner & 0x1)
     {
-        strPoint = @"white.png";
+        strPoint = @"black.png";
     }
     else
     {
-        strPoint = @"black.png";
+        strPoint = @"white.png";
     }
     
     [viewchess addChess:view imgUrl:strPoint];
@@ -60,14 +65,15 @@ int iOwner;
     int i = [viewchess getRow:view];
     int j = [viewchess getColumn:view];
     
-    if (type == 0)
-    {
-        iMatrix[i][j] = 1;
-    }
-    else
+    if (iOwner & 0x1)
     {
         iMatrix[i][j] = -1;
     }
+    else
+    {
+        iMatrix[i][j] = 1;
+    }
+    ++iOwner;
     
     [self CountWar:i y:j];
 }
@@ -75,13 +81,15 @@ int iOwner;
 
 - (void) assertWinner: (int*)iSum
 {
-    if (*iSum == 5) {
+    if (*iSum == 5)
+    {
+        bfinished = true;
         UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"白子胜。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
-
     }
     else if(*iSum == -5)
     {
+        bfinished = true;
         UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"黑子胜。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView show];
     }
@@ -156,19 +164,7 @@ int iOwner;
     
     if(touch.view.backgroundColor == [UIColor lightGrayColor] || touch.view.backgroundColor == [UIColor grayColor])
     {
-        if (iOwner & 0x1)
-        {
-            [self addPoint:touch.view type:0];
-        }
-        else
-        {
-            [self addPoint:touch.view type:1];
-        }
-        ++iOwner;
-    }
-    else
-    {
-        
+       [self addPoint:touch.view];
     }
 }
 
@@ -205,6 +201,23 @@ int iOwner;
            }
        }
     }
+}
+
+-(IBAction)ReStartPressUp:(id)sender
+{
+    [viewchess clearChess];
+    
+    for (int i=0; i<iRow; ++i)
+    {
+        for (int j=0; j<iRow; ++j) {
+            iMatrix[i][j] = 0;
+        }
+    }
+}
+
+-(IBAction)ExitPressUp:(id)sender
+{
+    exit(0);
 }
 
 @end

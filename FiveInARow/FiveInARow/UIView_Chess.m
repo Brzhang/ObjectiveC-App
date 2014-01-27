@@ -50,11 +50,19 @@
 {
     return [(SubChessView*)view iRow];
 }
+
 - (int) getColumn:(UIView*)view
 {
     return [(SubChessView*)view iColumn];
 }
 
+- (void) clearChess
+{
+    for (SubChessView *uiview in [self subviews])
+    {
+        [uiview removeChess];
+    }
+}
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
