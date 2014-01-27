@@ -26,15 +26,16 @@
     return self;
 }
 
-- (void) addChess:(NSString*)imgurl
+- (bool) addChess:(NSString*)imgurl
 {
     if (imgChess != nil) {
-        return;
+        return false;
     }
     
     imgChess = [[UIImageView alloc]initWithImage:[UIImage imageNamed:imgurl]];
     
     [self addSubview:imgChess];
+    return true;
 }
 
 - (void) removeChess

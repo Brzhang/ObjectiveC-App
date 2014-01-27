@@ -8,20 +8,21 @@
 
 #import <UIKit/UIKit.h>
 #import "UIView_Chess.h"
+#import "Tactics.h"
 
 @interface ViewController : UIViewController
 {
     UIView_Chess* viewchess;
     IBOutlet UIButton* btnReStart;
     IBOutlet UIButton* btnExit;
+    Tactics* tactics;
 }
 @property (nonatomic,retain) UIView_Chess* viewchess;
 @property (nonatomic,retain) UIButton* btnReStart;
 @property (nonatomic,retain) UIButton* btnExit;
+@property (nonatomic,retain) Tactics* tactics;
 
 -(IBAction)ReStartPressUp:(id)sender;
 -(IBAction)ExitPressUp:(id)sender;
 
-- (void) assertWinner: (int*)iSum;
-- (void) CountWar: (NSInteger)x y:(NSInteger)y;
 @end

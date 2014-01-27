@@ -18,7 +18,7 @@
 @property (nonatomic)int iRow;
 @property (nonatomic)int iColumn;
 
-- (void) addChess:(NSString*)imgurl;
+- (bool) addChess:(NSString*)imgurl;
 - (void) removeChess;
 - (void) setCoordinate:(int)x y:(int)y;
 

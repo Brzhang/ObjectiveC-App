@@ -36,9 +36,9 @@
     }
 }
 
-- (void) addChess:(UIView*)view imgUrl:(NSString*)imgurl
+- (bool) addChess:(UIView*)view imgUrl:(NSString*)imgurl
 {
-    [(SubChessView*)view addChess:imgurl];
+    return [(SubChessView*)view addChess:imgurl];
 }
 
 - (void) removeChess:(UIView*)view

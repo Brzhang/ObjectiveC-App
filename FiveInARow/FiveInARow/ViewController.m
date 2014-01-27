@@ -17,11 +17,11 @@
 @synthesize viewchess;
 @synthesize btnReStart;
 @synthesize btnExit;
+@synthesize tactics;
 
 
 #define iRow  10
 #define iLineHigh 32
-int iMatrix[iRow][iRow];
 int iOwner;
 bool bfinished;
 
@@ -40,11 +40,29 @@ bool bfinished;
     [self.view addSubview:viewchess];
     viewchess.tag = 100;
     
-    for (int i=0; i<iRow; ++i)
-    {
-        for (int j=0; j<iRow; ++j) {
-            iMatrix[i][j] = 0;
+    tactics = [Tactics alloc];
+    [tactics Init:iRow column:iRow];
+}
+
+- (void) assertWiner:(int)i y:(int)j
+{
+    switch ([tactics CountWar:i y:j]) {
+        case WHITEWIN:
+        {
+            bfinished = true;
+            UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"白子胜。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+            break;
+        }            
+        case BLACKWIN:
+        {
+            bfinished = true;
+            UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"黑子胜。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+            [alertView show];
+            break;
         }
+        default:
+            break;
     }
 }
 
@@ -60,104 +78,30 @@ bool bfinished;
         strPoint = @"white.png";
     }
     
-    [viewchess addChess:view imgUrl:strPoint];
-    
-    int i = [viewchess getRow:view];
-    int j = [viewchess getColumn:view];
-    
-    if (iOwner & 0x1)
+    if ([viewchess addChess:view imgUrl:strPoint])
     {
-        iMatrix[i][j] = -1;
-    }
-    else
-    {
-        iMatrix[i][j] = 1;
-    }
-    ++iOwner;
-    
-    [self CountWar:i y:j];
-}
-
-
-- (void) assertWinner: (int*)iSum
-{
-    if (*iSum == 5)
-    {
-        bfinished = true;
-        UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"白子胜。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alertView show];
-    }
-    else if(*iSum == -5)
-    {
-        bfinished = true;
-        UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"黑子胜。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [alertView show];
-    }
-    *iSum = 0;
-}
-
-- (void) CountWar: (NSInteger)x y:(NSInteger)y
-{
-    int iSum = 0;
-    if (x - 4 >= 0) {
+        int i = [viewchess getRow:view];
+        int j = [viewchess getColumn:view];
         
-        for(int i = 0; i < 5; ++i)
-            iSum += iMatrix[x-i][y];
+        if (iOwner & 0x1)
+        {
+            [tactics setMatrixValue:i y:j value:-1];
+        }
+        else
+        {
+            [tactics setMatrixValue:i y:j value:1];
+        }
+        ++iOwner;
+        [self assertWiner:i y:j];
     }
-    [self assertWinner:&iSum];
-    
-    if (x + 4 < iRow) {
-        
-        for(int i = 0; i < 5; ++i)
-            iSum += iMatrix[x+i][y];
-    }
-    [self assertWinner:&iSum];
-    
-    if (y - 4 >= 0) {
-        
-        for(int i = 0; i < 5; ++i)
-            iSum += iMatrix[x][y-i];
-    }
-    [self assertWinner:&iSum];
-
-    if (y + 4 < iRow) {
-        
-        for(int i = 0; i < 5; ++i)
-            iSum += iMatrix[x][y+i];
-    }
-    [self assertWinner:&iSum];
-    
-    if (x-4>=0 && y-4>=0) {
-        for(int i = 0; i < 5; ++i)
-            iSum += iMatrix[x-i][y-i];
-
-    }
-    [self assertWinner:&iSum];
-    
-    if (x-4>=0 && y+4<iLineHigh) {
-        for(int i = 0; i < 5; ++i)
-            iSum += iMatrix[x-i][y+i];
-        
-    }
-    [self assertWinner:&iSum];
-    
-    if (x+4<iLineHigh && y-4>=0) {
-        for(int i = 0; i < 5; ++i)
-            iSum += iMatrix[x+i][y-i];
-        
-    }
-    [self assertWinner:&iSum];
-    
-    if (x+4<iLineHigh && y+4<iLineHigh) {
-        for(int i = 0; i < 5; ++i)
-            iSum += iMatrix[x+i][y+i];
-        
-    }
-    [self assertWinner:&iSum];
 }
 
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event
 {
+    if (bfinished) {
+        return;
+    }
+    
     NSSet *allTouches = [event allTouches];    //return all objects relational
     UITouch *touch = [allTouches anyObject];   //return all objects in the view
     //CGPoint point = [touch locationInView:[touch view]]; //return the coordinate of the touch point
@@ -174,7 +118,7 @@ bool bfinished;
     // Dispose of any resources that can be recreated.
 }
 
--(BOOL) shouldAutorotate
+- (BOOL) shouldAutorotate
 {
     return TRUE;
 }
@@ -184,7 +128,7 @@ bool bfinished;
     return UIInterfaceOrientationMaskAll;
 }
 
--(void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
+- (void) willRotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
    if (UIInterfaceOrientationIsPortrait(toInterfaceOrientation))
    {
@@ -203,19 +147,17 @@ bool bfinished;
     }
 }
 
--(IBAction)ReStartPressUp:(id)sender
+- (IBAction)ReStartPressUp:(id)sender
 {
     [viewchess clearChess];
     
-    for (int i=0; i<iRow; ++i)
-    {
-        for (int j=0; j<iRow; ++j) {
-            iMatrix[i][j] = 0;
-        }
-    }
+    [tactics clearMatrix];
+    
+    bfinished = false;
+    iOwner = 0;
 }
 
--(IBAction)ExitPressUp:(id)sender
+- (IBAction)ExitPressUp:(id)sender
 {
     exit(0);
 }

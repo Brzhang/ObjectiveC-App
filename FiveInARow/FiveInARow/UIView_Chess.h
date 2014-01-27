@@ -15,7 +15,7 @@
 
 - (void) CreateChess:(int)left top:(int)top row:(int)row column:(int)column hight:(int)hight width:(int)width;
 
-- (void) addChess:(UIView*)view imgUrl:(NSString*)imgurl;
+- (bool) addChess:(UIView*)view imgUrl:(NSString*)imgurl;
 - (void) removeChess:(UIView*)view;
 
 - (int) getRow:(UIView*)view;
