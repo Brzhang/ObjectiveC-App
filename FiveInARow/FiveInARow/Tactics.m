@@ -49,103 +49,230 @@
     m_iMatrix[x][y] = value;
 }
 
-- (winner) assertWinner: (int)iSum
+- (Winner) CountWar: (int)x y:(int)y
 {
-    if (iSum >= 5)
+    SeqInfo info[4];
+    info[0] = [self makeSeqRow:x y:y value:m_iMatrix[x][y]];
+    info[1] = [self makeSeqColumn:x y:y value:m_iMatrix[x][y]];
+    info[2] = [self makeSeqLeftDiagonal:x y:y value:m_iMatrix[x][y]];
+    info[3] = [self makeSeqRightDiagonal:x y:y value:m_iMatrix[x][y]];
+    
+    //double live three , if first player made double three then the opponent will win.
+    int iCount = 0;
+    for (int i = 0; i<4; ++i)
     {
-        return WHITEWIN;
+        if(info[i].ilength >= 3 && (info[i].state == LIVE || info[i].state == LIVEJUMP))
+            ++iCount;
+        
+         //five in a row is win
+        if (info[i].ilength == 5)
+        {
+            return m_iMatrix[x][y] == 1?BALCK:WHITE;
+        }
     }
-    else if(iSum <= -5)
-    {
-        return BLACKWIN;
+    if (iCount>=2 && m_iMatrix[x][y] == 1) {
+        return WHITE;
     }
-    return NOWIN;
+    return NOWINNER;
 }
 
-- (winner) CountWar: (NSInteger)x y:(NSInteger)y
+- (SeqInfo) makeSeqRow:(int)x y:(int)y value:(int)value
 {
-    int iSum = 0;
-    int iOldSum = 0;
-    winner win;
-    //count the subarray if the sum of subarray is 5 or -5 mean the winner been found.
-    //row
-    for (int i = 0; i<m_iRow; ++i)
+    bool bflag = false;
+    SeqInfo seq = {0};
+    int i = x;
+    while (i>=0 && i< m_iRow)
     {
-        iSum+=m_iMatrix[i][y];
-        win = [self assertWinner:iSum];
-        if (win != NOWIN) {
-            return win;
+        if (m_iMatrix[i][y] == value)
+        {
+            ++seq.ilength;
         }
-        if (abs(iSum) < abs(iOldSum)) {
-            iSum = 0;
-            --i;
+        else
+        {
+            if (m_iMatrix[i][y] != 0)
+            {
+                bflag = true;
+            }
+            break;
         }
-        iOldSum = iSum;
+        --i;
+    }
+    i = x+1;
+    while (i>=0 && i< m_iRow)
+    {
+        if (m_iMatrix[i][y] == value)
+        {
+            ++seq.ilength;
+        }
+        else
+        {
+            if (m_iMatrix[i][y] != 0)
+            {
+                bflag = true;
+            }
+            break;
+        }
+        ++i;
     }
     
-    //column
-    iSum = iOldSum = 0;
-    for (int i = 0; i<m_iColumn; ++i)
-    {
-        iSum+=m_iMatrix[x][i];
-        win = [self assertWinner:iSum];
-        if (win != NOWIN) {
-            return win;
-        }
-        if (abs(iSum) < abs(iOldSum)) {
-            iSum = 0;
-            --i;
-        }
-        iOldSum = iSum;
+    if (bflag) {
+        seq.state = DIED;
     }
-    
-    //X
-    iSum = iOldSum = 0;
+    else
+    {
+        seq.state = LIVE;
+    }
+    return seq;
+}
+- (SeqInfo) makeSeqColumn:(int)x y:(int)y value:(int)value
+{
+    bool bflag = false;
+    SeqInfo seq = {0};
+    int i = y;
+    while (i>=0 && i< m_iRow)
+    {
+        if (m_iMatrix[x][i] == value)
+        {
+            ++seq.ilength;
+        }
+        else
+        {
+            if (m_iMatrix[i][y] != 0)
+            {
+                bflag = true;
+            }
+            break;
+        }
+        --i;
+    }
+    i = y+1;
+    while (i>=0 && i< m_iRow)
+    {
+        if (m_iMatrix[x][i] == value)
+        {
+            ++seq.ilength;
+        }
+        else
+        {
+            if (m_iMatrix[i][y] != 0)
+            {
+                bflag = true;
+            }
+            break;
+        }
+        ++i;
+    }
+    if (bflag) {
+        seq.state = DIED;
+    }
+    else
+    {
+        seq.state = LIVE;
+    }
+    return seq;}
+ 
+- (SeqInfo) makeSeqLeftDiagonal:(int)x y:(int)y value:(int)value
+{
+    bool bflag = false;
+    SeqInfo seq = {0};
     int i = x;
     int j = y;
-    while (i>0 && j>0) {
+    while (i>=0 && i< m_iRow && j>=0 && j<m_iColumn)
+    {
+        if (m_iMatrix[i][j] == value)
+        {
+            ++seq.ilength;
+        }
+        else
+        {
+            if (m_iMatrix[i][j] != 0)
+            {
+                bflag = true;
+            }
+            break;
+        }
         --i;
         --j;
     }
-    while (i<m_iRow && j<m_iColumn)
+    i = x+1;
+    j = y+1;
+    while (i>=0 && i< m_iRow && j>=0 && j<m_iColumn)
     {
-        iSum+=m_iMatrix[i][j];
-        win = [self assertWinner:iSum];
-        if (win != NOWIN) {
-            return win;
+        if (m_iMatrix[i][j] == value)
+        {
+            ++seq.ilength;
         }
-        if (abs(iSum) < abs(iOldSum)) {
-            iSum = 0;
-            --i;
+        else
+        {
+            if (m_iMatrix[i][j] != 0)
+            {
+                bflag = true;
+            }
+            break;
         }
-        iOldSum = iSum;
         ++i;
         ++j;
     }
-    
-    iSum = iOldSum = 0;
-    i = x;
-    j = y;
-    while (i>0 && j<m_iColumn-1) {
-        --i;
-        ++j;
+    if (bflag) {
+        seq.state = DIED;
     }
-
-    while (i<m_iRow && j>=0)
+    else
     {
-        iSum+=m_iMatrix[i][j];
-        win = [self assertWinner:iSum];
-        if (win != NOWIN) {
-            return win;
-        }
-        if (abs(iSum) < abs(iOldSum)) {
-            iSum = 0;
-            --i;
-        }
-        iOldSum = iSum;
-        ++i;
-        --j;
+        seq.state = LIVE;
     }
-    return NOWIN;
+    return seq;
 }
+
+- (SeqInfo) makeSeqRightDiagonal:(int)x y:(int)y value:(int)value
+{
+    bool bflag = false;
+    SeqInfo seq = {0};
+    int i = x;
+    int j = y;
+    while (i>=0 && i< m_iRow && j>=0 && j<m_iColumn)
+    {
+        if (m_iMatrix[i][j] == value)
+        {
+            ++seq.ilength;
+        }
+        else
+        {
+            if (m_iMatrix[i][j] != 0)
+            {
+                bflag = true;
+            }
+            break;
+        }
+        --i;
+        ++j;
+    }
+    i = x+1;
+    j = y-1;
+    while (i>=0 && i< m_iRow && j>=0 && j<m_iColumn)
+    {
+        if (m_iMatrix[i][j] == value)
+        {
+            ++seq.ilength;
+        }
+        else
+        {
+            if (m_iMatrix[i][j] != 0)
+            {
+                bflag = true;
+            }
+            break;
+        }
+        ++i;
+        --j;
+    }
+    if (bflag) {
+        seq.state = DIED;
+    }
+    else
+    {
+        seq.state = LIVE;
+    }
+    return seq;}
+
+
 @end

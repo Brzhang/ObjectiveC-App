@@ -10,10 +10,23 @@
 
 typedef enum
 {
-    WHITEWIN,
-    BLACKWIN,
-    NOWIN
-}winner;
+    LIVE,
+    DIED,
+    LIVEJUMP
+}SeqState;
+
+typedef struct
+{
+    int ilength;
+    SeqState state;
+}SeqInfo;
+
+typedef enum
+{
+    BALCK,
+    WHITE,
+    NOWINNER
+} Winner;
 
 @interface Tactics : AppDelegate
 {
@@ -26,9 +39,11 @@ typedef enum
 @property (nonatomic)int m_iColumn;
 
 - (bool) Init:(int)row column:(int)column;
-- (winner) assertWinner: (int)iSum;
-- (winner) CountWar: (int)x y:(int)y;
+- (Winner) CountWar: (int)x y:(int)y;
 - (void) setMatrixValue: (int)x y:(int)y value:(int)value;
 - (void) clearMatrix;
-//- (bool) DoubleThree:(int)x y:(int)y value:(int)value;
+- (SeqInfo) makeSeqRow:(int)x y:(int)y value:(int)value;
+- (SeqInfo) makeSeqColumn:(int)x y:(int)y value:(int)value;
+- (SeqInfo) makeSeqLeftDiagonal:(int)x y:(int)y value:(int)value;
+- (SeqInfo) makeSeqRightDiagonal:(int)x y:(int)y value:(int)value;
 @end

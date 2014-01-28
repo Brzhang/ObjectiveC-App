@@ -47,14 +47,14 @@ bool bfinished;
 - (void) assertWiner:(int)i y:(int)j
 {
     switch ([tactics CountWar:i y:j]) {
-        case WHITEWIN:
+        case BALCK:
         {
             bfinished = true;
             UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"Black Win。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
             [alertView show];
             break;
-        }            
-        case BLACKWIN:
+        }
+        case WHITE:
         {
             bfinished = true;
             UIAlertView *alertView=[[UIAlertView alloc] initWithTitle:@"title" message:@"White Win。" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
