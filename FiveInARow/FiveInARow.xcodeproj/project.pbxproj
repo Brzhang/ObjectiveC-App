@@ -10,6 +10,7 @@
 		5F0CB35B1894BD1700303761 /* UIView_Chess.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0CB35A1894BD1700303761 /* UIView_Chess.m */; };
 		5F0DCA16189605920086360B /* Tactics.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0DCA15189605920086360B /* Tactics.m */; };
 		5F3FA6E41894FC6F000D8CCB /* SubChessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3FA6E31894FC6F000D8CCB /* SubChessView.m */; };
+		5FBB96FE18979CD100960828 /* AI_Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB96FD18979CD100960828 /* AI_Base.m */; };
 		5FEA6A2018923310004642E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEA6A1F18923310004642E9 /* Foundation.framework */; };
 		5FEA6A2218923310004642E9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEA6A2118923310004642E9 /* CoreGraphics.framework */; };
 		5FEA6A2418923310004642E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEA6A2318923310004642E9 /* UIKit.framework */; };
@@ -45,6 +46,8 @@
 		5F0DCA15189605920086360B /* Tactics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tactics.m; sourceTree = "<group>"; };
 		5F3FA6E21894FC6F000D8CCB /* SubChessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubChessView.h; sourceTree = "<group>"; };
 		5F3FA6E31894FC6F000D8CCB /* SubChessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubChessView.m; sourceTree = "<group>"; };
+		5FBB96FC18979CD100960828 /* AI_Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AI_Base.h; path = AI/AI_Base.h; sourceTree = "<group>"; };
+		5FBB96FD18979CD100960828 /* AI_Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AI_Base.m; path = AI/AI_Base.m; sourceTree = "<group>"; };
 		5FEA6A1C18923310004642E9 /* FiveInARow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FiveInARow.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5FEA6A1F18923310004642E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5FEA6A2118923310004642E9 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -92,6 +95,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		5FBB96F818979C3600960828 /* AI */ = {
+			isa = PBXGroup;
+			children = (
+				5FBB96FC18979CD100960828 /* AI_Base.h */,
+				5FBB96FD18979CD100960828 /* AI_Base.m */,
+			);
+			name = AI;
+			sourceTree = "<group>";
+		};
 		5FEA6A1318923310004642E9 = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +138,7 @@
 		5FEA6A2518923310004642E9 /* FiveInARow */ = {
 			isa = PBXGroup;
 			children = (
+				5FBB96F818979C3600960828 /* AI */,
 				5FEA6A2E18923310004642E9 /* AppDelegate.h */,
 				5FEA6A2F18923310004642E9 /* AppDelegate.m */,
 				5FEA6A3418923310004642E9 /* ViewController.h */,
@@ -285,6 +298,7 @@
 				5FEA6A3018923310004642E9 /* AppDelegate.m in Sources */,
 				5F0DCA16189605920086360B /* Tactics.m in Sources */,
 				5FEA6A2C18923310004642E9 /* main.m in Sources */,
+				5FBB96FE18979CD100960828 /* AI_Base.m in Sources */,
 				5F0CB35B1894BD1700303761 /* UIView_Chess.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

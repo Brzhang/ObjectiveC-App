@@ -57,7 +57,7 @@
     info[2] = [self makeSeqLeftDiagonal:x y:y value:m_iMatrix[x][y]];
     info[3] = [self makeSeqRightDiagonal:x y:y value:m_iMatrix[x][y]];
     
-    //double live three , if first player made double three then the opponent will win.
+    //double live three or four , if first player made double three then the opponent will win.
     int iCount = 0;
     for (int i = 0; i<4; ++i)
     {

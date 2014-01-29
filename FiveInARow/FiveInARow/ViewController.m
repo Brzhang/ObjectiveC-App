@@ -20,8 +20,8 @@
 @synthesize tactics;
 
 
-#define iRow  10
-#define iLineHigh 32
+#define iRow  15
+#define iLineHigh 21
 int iOwner;
 bool bfinished;
 
@@ -36,7 +36,7 @@ bool bfinished;
     bfinished = false;
     
     viewchess = [UIView_Chess alloc];
-    [viewchess CreateChess:0 top:(rect.size.height-iRow*iLineHigh)/2 row:iRow column:iRow hight:iLineHigh width:iLineHigh];
+    [viewchess CreateChess:2 top:(rect.size.height-iRow*iLineHigh)/2 row:iRow column:iRow hight:iLineHigh width:iLineHigh];
     [self.view addSubview:viewchess];
     viewchess.tag = 100;
     
