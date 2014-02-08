@@ -38,12 +38,11 @@ typedef enum
 @property (nonatomic)int m_iRow;
 @property (nonatomic)int m_iColumn;
 
-- (bool) Init:(int)row column:(int)column;
+- (bool) Init:(int)row column:(int)column matrix:(int**)matrix;
 - (Winner) CountWar: (int)x y:(int)y;
-- (void) setMatrixValue: (int)x y:(int)y value:(int)value;
-- (void) clearMatrix;
-- (SeqInfo) makeSeqRow:(int)x y:(int)y value:(int)value;
-- (SeqInfo) makeSeqColumn:(int)x y:(int)y value:(int)value;
-- (SeqInfo) makeSeqLeftDiagonal:(int)x y:(int)y value:(int)value;
-- (SeqInfo) makeSeqRightDiagonal:(int)x y:(int)y value:(int)value;
+- (SeqInfo) makeSeqRow:(int)x y:(int)y value:(int)value relx:(int*)rx rely:(int*)ry;
+- (SeqInfo) makeSeqColumn:(int)x y:(int)y value:(int)value relx:(int*)rx rely:(int*)ry;
+- (SeqInfo) makeSeqLeftDiagonal:(int)x y:(int)y value:(int)value relx:(int*)rx rely:(int*)ry;
+- (SeqInfo) makeSeqRightDiagonal:(int)x y:(int)y value:(int)value relx:(int*)rx rely:(int*)ry;
+- (void) clearrel:(int*)rel;
 @end

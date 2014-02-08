@@ -63,6 +63,19 @@
         [uiview removeChess];
     }
 }
+
+-(UIView*) getViewFormCoordinate:(int)x y:(int)y
+{
+    for (SubChessView *uiview in [self subviews])
+    {
+        if ([uiview getRow] == x && [uiview getColumn] == y)
+        {
+            return uiview;
+        }
+    }
+    return nil;
+}
+
 /*
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.

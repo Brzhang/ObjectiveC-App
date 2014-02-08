@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5F08938E18A4D91200E24C77 /* AI_Ergodic.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F08938D18A4D91200E24C77 /* AI_Ergodic.m */; };
 		5F0CB35B1894BD1700303761 /* UIView_Chess.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0CB35A1894BD1700303761 /* UIView_Chess.m */; };
 		5F0DCA16189605920086360B /* Tactics.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0DCA15189605920086360B /* Tactics.m */; };
 		5F3FA6E41894FC6F000D8CCB /* SubChessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3FA6E31894FC6F000D8CCB /* SubChessView.m */; };
@@ -27,6 +28,7 @@
 		5FEA6A551892340B004642E9 /* FiveInARow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FEA6A541892340B004642E9 /* FiveInARow.xib */; };
 		5FEA6A59189256E7004642E9 /* white.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEA6A57189256E7004642E9 /* white.png */; };
 		5FEA6A5A189256E7004642E9 /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEA6A58189256E7004642E9 /* black.png */; };
+		5FFF24EA18A5CBB400DF782A /* chessController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FFF24E918A5CBB400DF782A /* chessController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5F08938C18A4D91200E24C77 /* AI_Ergodic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AI_Ergodic.h; path = AI/AI_Ergodic.h; sourceTree = "<group>"; };
+		5F08938D18A4D91200E24C77 /* AI_Ergodic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AI_Ergodic.m; path = AI/AI_Ergodic.m; sourceTree = "<group>"; };
 		5F0CB3591894BD1700303761 /* UIView_Chess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIView_Chess.h; sourceTree = "<group>"; };
 		5F0CB35A1894BD1700303761 /* UIView_Chess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIView_Chess.m; sourceTree = "<group>"; };
 		5F0DCA14189605920086360B /* Tactics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tactics.h; sourceTree = "<group>"; };
@@ -69,6 +73,8 @@
 		5FEA6A541892340B004642E9 /* FiveInARow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FiveInARow.xib; sourceTree = "<group>"; };
 		5FEA6A57189256E7004642E9 /* white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = white.png; path = Resources/white.png; sourceTree = "<group>"; };
 		5FEA6A58189256E7004642E9 /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = black.png; path = Resources/black.png; sourceTree = "<group>"; };
+		5FFF24E818A5CBB400DF782A /* chessController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = chessController.h; sourceTree = "<group>"; };
+		5FFF24E918A5CBB400DF782A /* chessController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = chessController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,6 +106,8 @@
 			children = (
 				5FBB96FC18979CD100960828 /* AI_Base.h */,
 				5FBB96FD18979CD100960828 /* AI_Base.m */,
+				5F08938C18A4D91200E24C77 /* AI_Ergodic.h */,
+				5F08938D18A4D91200E24C77 /* AI_Ergodic.m */,
 			);
 			name = AI;
 			sourceTree = "<group>";
@@ -152,6 +160,8 @@
 				5F3FA6E31894FC6F000D8CCB /* SubChessView.m */,
 				5F0DCA14189605920086360B /* Tactics.h */,
 				5F0DCA15189605920086360B /* Tactics.m */,
+				5FFF24E818A5CBB400DF782A /* chessController.h */,
+				5FFF24E918A5CBB400DF782A /* chessController.m */,
 			);
 			path = FiveInARow;
 			sourceTree = "<group>";
@@ -294,10 +304,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				5F3FA6E41894FC6F000D8CCB /* SubChessView.m in Sources */,
+				5FFF24EA18A5CBB400DF782A /* chessController.m in Sources */,
 				5FEA6A3618923310004642E9 /* ViewController.m in Sources */,
 				5FEA6A3018923310004642E9 /* AppDelegate.m in Sources */,
 				5F0DCA16189605920086360B /* Tactics.m in Sources */,
 				5FEA6A2C18923310004642E9 /* main.m in Sources */,
+				5F08938E18A4D91200E24C77 /* AI_Ergodic.m in Sources */,
 				5FBB96FE18979CD100960828 /* AI_Base.m in Sources */,
 				5F0CB35B1894BD1700303761 /* UIView_Chess.m in Sources */,
 			);

@@ -8,19 +8,19 @@
 
 #import <UIKit/UIKit.h>
 #import "UIView_Chess.h"
-#import "Tactics.h"
+#import "chessController.h"
 
 @interface ViewController : UIViewController
 {
     UIView_Chess* viewchess;
     IBOutlet UIButton* btnReStart;
     IBOutlet UIButton* btnExit;
-    Tactics* tactics;
+    chessController* chessCtl;
 }
 @property (nonatomic,retain) UIView_Chess* viewchess;
 @property (nonatomic,retain) UIButton* btnReStart;
 @property (nonatomic,retain) UIButton* btnExit;
-@property (nonatomic,retain) Tactics* tactics;
+@property (nonatomic,retain) chessController* chessCtl;
 
 -(IBAction)ReStartPressUp:(id)sender;
 -(IBAction)ExitPressUp:(id)sender;

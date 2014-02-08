@@ -21,4 +21,6 @@
 - (int) getRow:(UIView*)view;
 - (int) getColumn:(UIView*)view;
 - (void) clearChess;
+
+- (UIView*) getViewFormCoordinate:(int)x y:(int)y;
 @end

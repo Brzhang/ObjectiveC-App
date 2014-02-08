@@ -17,7 +17,7 @@
 @synthesize viewchess;
 @synthesize btnReStart;
 @synthesize btnExit;
-@synthesize tactics;
+@synthesize chessCtl;
 
 
 #define iRow  15
@@ -40,13 +40,16 @@ bool bfinished;
     [self.view addSubview:viewchess];
     viewchess.tag = 100;
     
-    tactics = [Tactics alloc];
-    [tactics Init:iRow column:iRow];
+    chessCtl = [chessController alloc];
+    [chessCtl Init:iRow column:iRow];
+    
+    //people vs robot
+    [chessCtl enableAI:EASY];
 }
 
 - (void) assertWiner:(int)i y:(int)j
 {
-    switch ([tactics CountWar:i y:j]) {
+    switch ([chessCtl CountWar:i y:j]) {
         case BALCK:
         {
             bfinished = true;
@@ -86,11 +89,11 @@ bool bfinished;
         
         if (iOwner & 0x1)
         {
-            [tactics setMatrixValue:i y:j value:-1];
+            [chessCtl setMatrixValue:i y:j value:-1];
         }
         else
         {
-            [tactics setMatrixValue:i y:j value:1];
+            [chessCtl setMatrixValue:i y:j value:1];
         }
         ++iOwner;
         [self assertWiner:i y:j];
@@ -110,6 +113,18 @@ bool bfinished;
     if(touch.view.backgroundColor == [UIColor lightGrayColor] || touch.view.backgroundColor == [UIColor grayColor])
     {
        [self addPoint:touch.view];
+    }
+    
+    //if enable the ai, after the people add chess, it's robot's turn.
+    if (bfinished) {
+        return;
+    }
+    if ([chessCtl isAIenabled])
+    {
+        int x,y;
+        [chessCtl AIDropChess:&x y:&y value:-1];
+        //get the view form known (x,y)
+        [self addPoint:[viewchess getViewFormCoordinate:x y:y]];
     }
 }
 
@@ -152,7 +167,7 @@ bool bfinished;
 {
     [viewchess clearChess];
     
-    [tactics clearMatrix];
+    [chessCtl clearMatrix];
     
     bfinished = false;
     iOwner = 0;
