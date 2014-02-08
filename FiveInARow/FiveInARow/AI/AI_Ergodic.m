@@ -34,6 +34,7 @@
             {
                 iLevel = MAKEFIVE;
             }
+            break;
         }
         case 4:
         {
@@ -97,33 +98,33 @@
     }
     int iLevel = 0xFFFFFFFF;
     int iLevelTemp = iLevel;
-    int relx[4] = {-1,-1,-1,-1};
-    int rely[4] = {-1,-1,-1,-1};
+    //int relx[4] = {-1,-1,-1,-1};
+    //int rely[4] = {-1,-1,-1,-1};
     //count the level of (x,y) in chess
     //first count the level in row, column, left diagonal and right diagonal, then select the largest as the level of (x,y)
     SeqInfo info[4];
-    info[0] = [tactic makeSeqRow:x y:y value:value relx:relx rely:rely];
+    info[0] = [tactic makeSeqRow:x y:y value:value relx:nil rely:nil];
     iLevelTemp = [self countLevelEx:info[0]];
     if (iLevel < iLevelTemp)
     {
         iLevel = iLevelTemp;
     }
     
-    info[1] = [tactic makeSeqColumn:x y:y value:value relx:relx rely:rely];
+    info[1] = [tactic makeSeqColumn:x y:y value:value relx:nil rely:nil];
     iLevelTemp = [self countLevelEx:info[1]];
     if (iLevel < iLevelTemp)
     {
         iLevel = iLevelTemp;
     }
     
-    info[2] = [tactic makeSeqLeftDiagonal:x y:y value:value relx:relx rely:rely];
+    info[2] = [tactic makeSeqLeftDiagonal:x y:y value:value relx:nil rely:nil];
     iLevelTemp = [self countLevelEx:info[2]];
     if (iLevel < iLevelTemp)
     {
         iLevel = iLevelTemp;
     }
     
-    info[3] = [tactic makeSeqRightDiagonal:x y:y value:value relx:relx rely:rely];
+    info[3] = [tactic makeSeqRightDiagonal:x y:y value:value relx:nil rely:nil];
     iLevelTemp = [self countLevelEx:info[3]];
     if (iLevel < iLevelTemp)
     {

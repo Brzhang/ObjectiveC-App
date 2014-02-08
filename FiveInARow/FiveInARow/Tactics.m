@@ -38,6 +38,8 @@ int rely[4] = {-1,-1,-1,-1};
 - (Winner) CountWar: (int)x y:(int)y
 {
     SeqInfo info[4];
+    [self clearrel:relx];
+    [self clearrel:rely];
     info[0] = [self makeSeqRow:x y:y value:m_iMatrix[x][y] relx:relx rely:rely];
     if (info[0].ilength == 5 && info[0].state != LIVEJUMP)
     {
