@@ -20,7 +20,7 @@
     m_iRow = row;
     m_iColumn = column;
     
-    m_iMatrix = malloc(sizeof(int)*row);
+    m_iMatrix = malloc(sizeof(int*)*row);
     if (m_iMatrix) {
         for (int i=0; i<column; ++i) {
             m_iMatrix[i] = malloc(sizeof(int)*column);

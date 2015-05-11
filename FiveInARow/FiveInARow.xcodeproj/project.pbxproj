@@ -10,6 +10,7 @@
 		5F08938E18A4D91200E24C77 /* AI_Ergodic.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F08938D18A4D91200E24C77 /* AI_Ergodic.m */; };
 		5F0CB35B1894BD1700303761 /* UIView_Chess.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0CB35A1894BD1700303761 /* UIView_Chess.m */; };
 		5F0DCA16189605920086360B /* Tactics.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F0DCA15189605920086360B /* Tactics.m */; };
+		5F19E9B118B30C3B00C2175D /* AI_MaxMin.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F19E9B018B30C3B00C2175D /* AI_MaxMin.m */; };
 		5F3FA6E41894FC6F000D8CCB /* SubChessView.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F3FA6E31894FC6F000D8CCB /* SubChessView.m */; };
 		5FBB96FE18979CD100960828 /* AI_Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FBB96FD18979CD100960828 /* AI_Base.m */; };
 		5FEA6A2018923310004642E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEA6A1F18923310004642E9 /* Foundation.framework */; };
@@ -48,6 +49,8 @@
 		5F0CB35A1894BD1700303761 /* UIView_Chess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIView_Chess.m; sourceTree = "<group>"; };
 		5F0DCA14189605920086360B /* Tactics.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Tactics.h; sourceTree = "<group>"; };
 		5F0DCA15189605920086360B /* Tactics.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Tactics.m; sourceTree = "<group>"; };
+		5F19E9AF18B30C3B00C2175D /* AI_MaxMin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AI_MaxMin.h; path = AI/AI_MaxMin.h; sourceTree = "<group>"; };
+		5F19E9B018B30C3B00C2175D /* AI_MaxMin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AI_MaxMin.m; path = AI/AI_MaxMin.m; sourceTree = "<group>"; };
 		5F3FA6E21894FC6F000D8CCB /* SubChessView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubChessView.h; sourceTree = "<group>"; };
 		5F3FA6E31894FC6F000D8CCB /* SubChessView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SubChessView.m; sourceTree = "<group>"; };
 		5FBB96FC18979CD100960828 /* AI_Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AI_Base.h; path = AI/AI_Base.h; sourceTree = "<group>"; };
@@ -108,6 +111,8 @@
 				5FBB96FD18979CD100960828 /* AI_Base.m */,
 				5F08938C18A4D91200E24C77 /* AI_Ergodic.h */,
 				5F08938D18A4D91200E24C77 /* AI_Ergodic.m */,
+				5F19E9AF18B30C3B00C2175D /* AI_MaxMin.h */,
+				5F19E9B018B30C3B00C2175D /* AI_MaxMin.m */,
 			);
 			name = AI;
 			sourceTree = "<group>";
@@ -248,7 +253,7 @@
 		5FEA6A1418923310004642E9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0500;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = brook;
 				TargetAttributes = {
 					5FEA6A3C18923310004642E9 = {
@@ -310,6 +315,7 @@
 				5F0DCA16189605920086360B /* Tactics.m in Sources */,
 				5FEA6A2C18923310004642E9 /* main.m in Sources */,
 				5F08938E18A4D91200E24C77 /* AI_Ergodic.m in Sources */,
+				5F19E9B118B30C3B00C2175D /* AI_MaxMin.m in Sources */,
 				5FBB96FE18979CD100960828 /* AI_Base.m in Sources */,
 				5F0CB35B1894BD1700303761 /* UIView_Chess.m in Sources */,
 			);
@@ -357,7 +363,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -396,7 +401,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_ENABLE_MODULES = YES;
@@ -454,7 +458,6 @@
 		5FEA6A5218923310004642E9 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FiveInARow.app/FiveInARow";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
@@ -477,7 +480,6 @@
 		5FEA6A5318923310004642E9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_INCLUDING_64_BIT)";
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/FiveInARow.app/FiveInARow";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(SDKROOT)/Developer/Library/Frameworks",
