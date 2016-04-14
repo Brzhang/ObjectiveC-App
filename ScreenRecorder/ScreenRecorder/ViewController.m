@@ -44,9 +44,10 @@
     [button addTarget:self action:@selector(clickBtnAction:) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:button];
     
-    _timeLable = [[UILabel alloc] initWithFrame:CGRectMake(160, 300, 50, 50)];
+    _timeLable = [[UILabel alloc] initWithFrame:CGRectMake(150, 300, 80, 50)];
     _timeLable.textAlignment = NSTextAlignmentCenter;
     _timeLable.text = @"0";
+    _timeLable.font = [UIFont systemFontOfSize:32];
     [self.view addSubview:_timeLable];
 }
 

@@ -9,6 +9,7 @@
 #import "AudioRecorder.h"
 #import <AudioToolbox/AudioQueue.h>
 #import <AudioToolbox/AudioFile.h>
+#import <AVFoundation/AVFoundation.h>
 
 //Structure for a recording audio queue
 static const int kNumberBuffers = 3;
@@ -27,6 +28,7 @@ struct AQRecorderState
 {
     struct AQRecorderState aqData;
 }
+@property (nonatomic, strong) AVAudioRecorder* audioRecorder;
 @end
 
 @implementation AudioRecorder
@@ -163,8 +165,67 @@ void SetAudioFormat(AudioStreamBasicDescription& format)
 
 - (BOOL) start: (NSString *) filePath
 {
-    SetAudioFormat(aqData.mDataFormat);
+    switch (_enum_audioRecorder) {
+        case EA_AVAudioRecorder:
+        {
+            return [self avAudioStart:filePath];
+        }
+        case EA_AudioQueue:
+        {
+            return [self audioQueueStart:filePath];
+        }
+        default:
+            break;
+    }
+    return NO;
+}
+
+- (BOOL) avAudioStart: (NSString *) filePath
+{
+    AVAudioSession *session = [AVAudioSession sharedInstance];
+    NSError* error = nil;
+    if (![session setCategory:AVAudioSessionCategoryPlayAndRecord withOptions:AVAudioSessionCategoryOptionDuckOthers error:&error]) {
+        return NO;
+    };
     
+    if (![session setActive:YES error:&error]) {
+        return NO;
+    }
+
+    NSDictionary *settings = @{
+                               AVFormatIDKey: @(kAudioFormatAppleIMA4),
+                               AVSampleRateKey: @(22050.0),
+                               AVNumberOfChannelsKey: @(1),
+                               AVEncoderAudioQualityKey: @(AVAudioQualityMedium),
+                               AVEncoderBitRateStrategyKey:AVAudioBitRateStrategy_Constant,
+                               AVEncoderBitRateKey:@(16000)
+                               };
+    _audioRecorder = [[AVAudioRecorder alloc] initWithURL:[NSURL fileURLWithPath:filePath]
+                                                 settings:settings error:&error];
+    if (error != nil) {
+        return NO;
+    }
+    
+    __block BOOL isGranted = NO;
+    if ([session respondsToSelector:@selector(requestRecordPermission:)])
+    {
+        [session requestRecordPermission:^(BOOL granted) {
+            isGranted = granted;
+        }];
+    }
+    if (isGranted) {
+        if ([_audioRecorder prepareToRecord])
+        {
+            return [_audioRecorder record];
+        }
+    }
+
+    return NO;
+}
+- (BOOL) audioQueueStart: (NSString *) filePath
+{
+    SetAudioFormat(aqData.mDataFormat);
+
     OSStatus status;
     //Creating a recording audio queue
     status = AudioQueueNewInput(&aqData.mDataFormat,
@@ -178,7 +239,7 @@ void SetAudioFormat(AudioStreamBasicDescription& format)
     {
         return NO;
     }
-    
+
     //Getting the audio format from an audio queue
     UInt32 dataFormatSize = sizeof(aqData.mDataFormat);
     
@@ -241,32 +302,60 @@ void SetAudioFormat(AudioStreamBasicDescription& format)
 
 - (BOOL) stop
 {
-    BOOL ret = NO;;
-    if (AudioQueueStop(aqData.mQueue, true))
-    {
-        ret = NO;
+    switch (_enum_audioRecorder) {
+        case EA_AVAudioRecorder:
+        {
+            [_audioRecorder stop]; //the result is asyn callback
+            return YES;
+        }
+        case EA_AudioQueue:
+        {
+            BOOL ret = NO;
+            if (AudioQueueStop(aqData.mQueue, true))
+            {
+                ret = NO;
+            }
+            else
+            {
+                ret = YES;
+            }
+            if (AudioFileClose (aqData.mAudioFile))
+            {
+                ret = NO;
+            }
+            aqData.mIsRunning = false;
+            return ret;
+
+        }
+        default:
+            break;
     }
-    else
-    {
-        ret = YES;
-    }
-    if (AudioFileClose (aqData.mAudioFile))
-    {
-        ret = NO;
-    }
-    aqData.mIsRunning = false;
-    return ret;
+    return NO;
 }
 
 - (BOOL) pause
 {
-    if (AudioQueuePause(aqData.mQueue))
+    switch (_enum_audioRecorder)
     {
-        return NO;
+        case EA_AVAudioRecorder:
+        {
+            [_audioRecorder pause];
+            return YES;
+        }
+        case EA_AudioQueue:
+        {
+            if (AudioQueuePause(aqData.mQueue))
+            {
+                return NO;
+            }
+            else
+            {
+                return YES;
+            }
+        }
+        default:
+            break;
     }
-    else
-    {
-        return YES;
-    }
+    return NO;
 }
 @end
