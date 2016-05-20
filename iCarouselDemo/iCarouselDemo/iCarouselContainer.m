@@ -12,7 +12,7 @@
 @interface iCarouselContainer() <iCarouselDelegate, iCarouselDataSource>
 @property (nonatomic, strong) iCarousel *iCarousel;
 @property (nonatomic, strong) NSArray *imageArray;
-@property (nonatomic, strong) NSMutableArray *selectedImages;
+@property (nonatomic, strong) NSMutableArray *selectedImageIndex;
 @property (nonatomic, strong) UIButton* finishBtn;
 @end
 
@@ -48,14 +48,18 @@
 }
 - (NSArray*) getSelectImageArray
 {
-    return _selectedImages;
+    NSMutableArray* array = [[NSMutableArray alloc] init];
+    for (int i = 0; i<self.selectedImageIndex.count; ++i) {
+        [array addObject:self.imageArray[[_selectedImageIndex[i] integerValue]]];
+    }
+    return array;
 }
 
 #pragma mark private methods
 - (void)finishBtnClicked
 {
     if ([_delegate respondsToSelector:@selector(selectImageArray:)]) {
-        [_delegate selectImageArray:_imageArray];
+        [_delegate selectImageArray:[self getSelectImageArray]];
     }
 }
 
@@ -84,7 +88,7 @@
     }
     
     ((UIImageView*)view).image = [UIImage imageWithContentsOfFile:_imageArray[index]];
-    if ([self.selectedImages containsObject:[NSNumber numberWithInteger:index]]) {
+    if ([self.selectedImageIndex containsObject:[NSNumber numberWithInteger:index]]) {
         view.layer.borderColor = [UIColor redColor].CGColor;
     }
     else{
@@ -131,17 +135,17 @@
 }
 
 -(void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index{
-    if ([self.selectedImages containsObject:[NSNumber numberWithInteger:index]]) {
-        [self.selectedImages removeObject:[NSNumber numberWithInteger:index]];
+    if ([self.selectedImageIndex containsObject:[NSNumber numberWithInteger:index]]) {
+        [self.selectedImageIndex removeObject:[NSNumber numberWithInteger:index]];
         [carousel itemViewAtIndex:index].layer.borderColor = [UIColor grayColor].CGColor;
         NSLog(@"selectedImage remove:%ld", (long)index);
     }
     else{
-        [self.selectedImages addObject:[NSNumber numberWithInteger:index]];
+        [self.selectedImageIndex addObject:[NSNumber numberWithInteger:index]];
         [carousel itemViewAtIndex:index].layer.borderColor = [UIColor redColor].CGColor;
         NSLog(@"selectedImage add:%ld", (long)index);
     }
-    NSLog(@"selectedImage conut:%lu", (unsigned long)self.selectedImages.count);
+    NSLog(@"selectedImage conut:%lu", (unsigned long)self.selectedImageIndex.count);
 }
 
 #pragma mark - lazy init
@@ -156,11 +160,11 @@
     return _iCarousel;
 }
 
--(NSMutableArray *)selectedImages{
-    if (_selectedImages == nil) {
-        _selectedImages = [[NSMutableArray alloc] init];
+-(NSMutableArray *)selectedImageIndex{
+    if (_selectedImageIndex == nil) {
+        _selectedImageIndex = [[NSMutableArray alloc] init];
     }
-    return _selectedImages;
+    return _selectedImageIndex;
 }
 
 - (UIButton*)finishBtn
