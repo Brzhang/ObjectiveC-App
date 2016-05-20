@@ -21,6 +21,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     _imageContainer = [[iCarouselContainer alloc] initWithFrame:CGRectMake(0, 200, self.view.frame.size.width, 170)];
+    _imageContainer.delegate = self;
     [self.view addSubview:_imageContainer];
     
     NSString* path = [NSString stringWithFormat:@"%@/%@",
