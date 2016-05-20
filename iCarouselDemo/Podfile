@@ -1,0 +1,3 @@
+target "iCarouselDemo" do
+  pod "iCarousel"
+end
