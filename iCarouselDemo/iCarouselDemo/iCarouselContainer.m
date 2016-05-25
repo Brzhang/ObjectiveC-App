@@ -9,6 +9,81 @@
 #import "iCarouselContainer.h"
 #import <iCarousel.h>
 
+
+@interface iCarouseView : UIView
+@property (nonatomic, strong) UIImageView* image;
+@property (nonatomic, strong) UIImageView* selectSign;
+@property (nonatomic, strong) UILabel* lblIndex;
+- (void) setSelect:(BOOL)isSeleced;
+@end
+
+@implementation iCarouseView
+
+- (id) initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+    }
+    return self;
+}
+
+-(void) setSelect:(BOOL)isSeleced
+{
+    if (isSeleced) {
+        _image.layer.borderColor = [UIColor greenColor].CGColor;
+        _image.layer.borderWidth = 2;
+        self.selectSign.hidden = NO;
+    }
+    else
+    {
+        _image.layer.borderColor = [UIColor grayColor].CGColor;
+        _image.layer.borderWidth = 1;
+        self.selectSign.hidden = YES;
+    }
+}
+
+-(UIImageView*) image
+{
+    if (_image == nil)
+    {
+        _image = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, self.frame.size.width, self.frame.size.height-20)];
+        _image.layer.borderWidth = 1;
+        _image.layer.borderColor = [UIColor grayColor].CGColor;
+        [self addSubview:_image];
+    }
+    return _image;
+}
+
+-(UIImageView*) selectSign
+{
+    if (_selectSign == nil)
+    {
+        _selectSign = [[UIImageView alloc] initWithFrame:
+                       CGRectMake(self.image.frame.size.width-self.image.frame.size.height/3-5,
+                                  self.image.frame.size.height-self.image.frame.size.height/3 -5,
+                                  self.image.frame.size.height/3,
+                                  self.image.frame.size.height/3)];
+        _selectSign.image = [[UIImage alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"selected" ofType:@"png"]];
+        _selectSign.hidden = YES;
+        [self addSubview:_selectSign];
+    }
+    return _selectSign;
+}
+
+-(UILabel*) lblIndex
+{
+    if (_lblIndex == nil) {
+        _lblIndex = [[UILabel alloc] initWithFrame:CGRectMake(0, self.frame.size.height-20, self.frame.size.width, 20)];
+        _lblIndex.textAlignment = NSTextAlignmentCenter;
+        _lblIndex.font = [UIFont systemFontOfSize:11];
+        [self addSubview:_lblIndex];
+    }
+    return _lblIndex;
+}
+
+
+@end
+
 @interface iCarouselContainer() <iCarouselDelegate, iCarouselDataSource>
 @property (nonatomic, strong) iCarousel *iCarousel;
 @property (nonatomic, strong) NSArray *imageArray;
@@ -30,7 +105,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self.iCarousel.frame = CGRectMake(0, 30, self.frame.size.width, 132);
+        self.iCarousel.frame = CGRectMake(0, 30, self.frame.size.width, 152);
         self.finishBtn.frame = CGRectMake(self.frame.size.width-100,0,100,30);
         [self addSubview:_iCarousel];
         [self addSubview:_finishBtn];
@@ -80,19 +155,17 @@
     }
     
     if (view == nil) {
-        view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 171, 132)];
+        view = [[iCarouseView alloc] initWithFrame:CGRectMake(0, 0, 171, 132)];
         view.backgroundColor = [UIColor whiteColor];
         view.contentMode = UIViewContentModeScaleAspectFit;
-        view.layer.borderWidth = 2;
-        view.layer.borderColor = [UIColor lightGrayColor].CGColor;
     }
-    
-    ((UIImageView*)view).image = [UIImage imageWithContentsOfFile:_imageArray[index]];
+    ((iCarouseView*)view).lblIndex.text = [NSString stringWithFormat:@"%ld",(long)index+1];
+    ((iCarouseView*)view).image.image = [UIImage imageWithContentsOfFile:_imageArray[index]];
     if ([self.selectedImageIndex containsObject:[NSNumber numberWithInteger:index]]) {
-        view.layer.borderColor = [UIColor redColor].CGColor;
+        [((iCarouseView*)view) setSelect:YES];
     }
     else{
-        view.layer.borderColor = [UIColor lightGrayColor].CGColor;
+        [((iCarouseView*)view) setSelect:NO];
     }
     return view;
 }
@@ -137,12 +210,12 @@
 -(void)carousel:(iCarousel *)carousel didSelectItemAtIndex:(NSInteger)index{
     if ([self.selectedImageIndex containsObject:[NSNumber numberWithInteger:index]]) {
         [self.selectedImageIndex removeObject:[NSNumber numberWithInteger:index]];
-        [carousel itemViewAtIndex:index].layer.borderColor = [UIColor grayColor].CGColor;
+        [((iCarouseView*)[carousel itemViewAtIndex:index]) setSelect:NO];
         NSLog(@"selectedImage remove:%ld", (long)index);
     }
     else{
         [self.selectedImageIndex addObject:[NSNumber numberWithInteger:index]];
-        [carousel itemViewAtIndex:index].layer.borderColor = [UIColor redColor].CGColor;
+        [((iCarouseView*)[carousel itemViewAtIndex:index]) setSelect:YES];
         NSLog(@"selectedImage add:%ld", (long)index);
     }
     NSLog(@"selectedImage conut:%lu", (unsigned long)self.selectedImageIndex.count);
