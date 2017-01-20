@@ -19,3 +19,6 @@ My Objective-C simple apps for iOS platform.
 
 5. ToolMenuDemo
    This is just a demo to show the custom tool menu of views.
+
+6. DyFramework
+   Demos to show how to make the dynamic framework dynamic loaded and called by the sample app, you can download (or put) the framework into the Document folder of the sample app.
