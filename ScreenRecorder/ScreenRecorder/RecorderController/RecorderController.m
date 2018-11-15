@@ -57,6 +57,7 @@
     [self removeTempFilePath:[NSString stringWithFormat:@"%@/%@",_saveDir,@"video.mp4"]];
     [_audioRecorder start:audiofilePath];
     _screenRecorder.videoURL = [NSURL fileURLWithPath:[NSString stringWithFormat:@"%@/%@",saveDir,@"video.mp4"]];
+    _screenRecorder.fps = 20;
     [_screenRecorder startRecording];
     return YES;
 }

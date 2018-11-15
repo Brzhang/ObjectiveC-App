@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC22D01F1CC0A060009FF107 /* tryEverything.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = BC22D01E1CC0A060009FF107 /* tryEverything.mp4 */; };
+		BC22D0211CC0DA9F009FF107 /* pic.jpg in Resources */ = {isa = PBXBuildFile; fileRef = BC22D0201CC0DA9F009FF107 /* pic.jpg */; };
 		BC9786331CB94686003883EC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9786321CB94686003883EC /* main.m */; };
 		BC9786361CB94686003883EC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9786351CB94686003883EC /* AppDelegate.m */; };
 		BC9786391CB94686003883EC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BC9786381CB94686003883EC /* ViewController.m */; };
@@ -19,10 +21,13 @@
 		BC9786551CB94D1A003883EC /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC9786541CB94D1A003883EC /* CoreGraphics.framework */; };
 		BC9786571CB94D65003883EC /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC9786561CB94D65003883EC /* UIKit.framework */; };
 		BC9786591CB94D83003883EC /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BC9786581CB94D83003883EC /* Foundation.framework */; };
+		BCA3F8281CC5C6D400DCB903 /* Language.strings in Resources */ = {isa = PBXBuildFile; fileRef = BCA3F82A1CC5C6D400DCB903 /* Language.strings */; };
 		BCAAF5441CBA680E00383363 /* Photos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BCAAF5431CBA680E00383363 /* Photos.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BC22D01E1CC0A060009FF107 /* tryEverything.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = tryEverything.mp4; sourceTree = "<group>"; };
+		BC22D0201CC0DA9F009FF107 /* pic.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = pic.jpg; sourceTree = "<group>"; };
 		BC97862E1CB94686003883EC /* ScreenRecorder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ScreenRecorder.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BC9786321CB94686003883EC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		BC9786341CB94686003883EC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -42,6 +47,11 @@
 		BC9786541CB94D1A003883EC /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		BC9786561CB94D65003883EC /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		BC9786581CB94D83003883EC /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		BCA3F8291CC5C6D400DCB903 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Language.strings; sourceTree = "<group>"; };
+		BCA3F82B1CC5C6D600DCB903 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Language.strings; sourceTree = "<group>"; };
+		BCA3F82C1CC5D10B00DCB903 /* mn-MN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "mn-MN"; path = "mn-MN.lproj/Main.strings"; sourceTree = "<group>"; };
+		BCA3F82D1CC5D10B00DCB903 /* mn-MN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "mn-MN"; path = "mn-MN.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		BCA3F82E1CC5D10B00DCB903 /* mn-MN */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "mn-MN"; path = "mn-MN.lproj/Language.strings"; sourceTree = "<group>"; };
 		BCAAF5431CBA680E00383363 /* Photos.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Photos.framework; path = System/Library/Frameworks/Photos.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -80,6 +90,8 @@
 		BC9786301CB94686003883EC /* ScreenRecorder */ = {
 			isa = PBXGroup;
 			children = (
+				BC22D0201CC0DA9F009FF107 /* pic.jpg */,
+				BC22D01E1CC0A060009FF107 /* tryEverything.mp4 */,
 				BC9786481CB9495C003883EC /* RecorderController */,
 				BC9786341CB94686003883EC /* AppDelegate.h */,
 				BC9786351CB94686003883EC /* AppDelegate.m */,
@@ -98,6 +110,7 @@
 			isa = PBXGroup;
 			children = (
 				BC9786321CB94686003883EC /* main.m */,
+				BCA3F82A1CC5C6D400DCB903 /* Language.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -173,6 +186,7 @@
 				TargetAttributes = {
 					BC97862D1CB94686003883EC = {
 						CreatedOnToolsVersion = 7.3;
+						DevelopmentTeam = ZX6F5Y4Z42;
 					};
 				};
 			};
@@ -183,6 +197,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"mn-MN",
 			);
 			mainGroup = BC9786251CB94686003883EC;
 			productRefGroup = BC97862F1CB94686003883EC /* Products */;
@@ -199,9 +214,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BCA3F8281CC5C6D400DCB903 /* Language.strings in Resources */,
+				BC22D01F1CC0A060009FF107 /* tryEverything.mp4 in Resources */,
 				BC9786411CB94686003883EC /* LaunchScreen.storyboard in Resources */,
 				BC97863E1CB94686003883EC /* Assets.xcassets in Resources */,
 				BC97863C1CB94686003883EC /* Main.storyboard in Resources */,
+				BC22D0211CC0DA9F009FF107 /* pic.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -228,6 +246,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				BC97863B1CB94686003883EC /* Base */,
+				BCA3F82C1CC5D10B00DCB903 /* mn-MN */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -236,8 +255,19 @@
 			isa = PBXVariantGroup;
 			children = (
 				BC9786401CB94686003883EC /* Base */,
+				BCA3F82D1CC5D10B00DCB903 /* mn-MN */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		BCA3F82A1CC5C6D400DCB903 /* Language.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				BCA3F8291CC5C6D400DCB903 /* Base */,
+				BCA3F82B1CC5C6D600DCB903 /* en */,
+				BCA3F82E1CC5D10B00DCB903 /* mn-MN */,
+			);
+			name = Language.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -335,9 +365,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ScreenRecorder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sunWind.ScreenRecorder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.HowDo.BNUudoStu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "962eecf0-b04a-49e8-ab0d-5d46a060197b";
 			};
 			name = Debug;
 		};
@@ -349,9 +379,9 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = ScreenRecorder/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sunWind.ScreenRecorder;
+				PRODUCT_BUNDLE_IDENTIFIER = com.HowDo.BNUudoStu;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "962eecf0-b04a-49e8-ab0d-5d46a060197b";
 			};
 			name = Release;
 		};

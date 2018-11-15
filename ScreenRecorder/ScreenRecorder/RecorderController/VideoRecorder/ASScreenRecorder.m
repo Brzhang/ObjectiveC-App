@@ -155,7 +155,7 @@
     
     NSError* error = nil;
     _videoWriter = [[AVAssetWriter alloc] initWithURL:self.videoURL ?: [self tempFileURL]
-                                             fileType:AVFileTypeQuickTimeMovie
+                                             fileType:AVFileTypeMPEG4
                                                 error:&error];
     NSParameterAssert(_videoWriter);
     
@@ -272,7 +272,7 @@
     dispatch_async(_render_queue, ^{
         if (![_videoWriterInput isReadyForMoreMediaData]) return;
         
-        if (self.pauseResumeTimeRanges.count % 2 != 0) {
+        if ((self.pauseResumeTimeRanges.count & 0x1) != 0) {
             [self.pauseResumeTimeRanges addObject:@(_displayLink.timestamp)];
         }
         
