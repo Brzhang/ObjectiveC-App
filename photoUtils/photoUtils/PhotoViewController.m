@@ -28,6 +28,7 @@
     if (self)
     {
         self.m_photoFactory = [[photoFactory alloc] init];
+        self.m_photoFactory.delegate = self;
     }
     return self;
 }

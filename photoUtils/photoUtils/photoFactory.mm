@@ -41,120 +41,72 @@
     }
     //转换hsv
     cv::Mat hsvImage;
-    cv::cvtColor(image,hsvImage,cv::COLOR_BGR2HSV);
+    cv::cvtColor(image,hsvImage, cv::COLOR_BGR2HSV);
+    cv::Mat grayImage;
+    cv::cvtColor(image, grayImage, cv::COLOR_BGR2GRAY);
     
-    const cv::Scalar hsvBlackLo(  0,  0,  0);
-    const cv::Scalar hsvBlackHi(185, 255, 46);
+    std::vector<cv::Mat> hsv_channels, bgr_channels;
+    cv::split(hsvImage, hsv_channels);
+    cv::split(image, bgr_channels);
+    cv::Mat hsv_hl, hsv_hh, hsv_s, hsv_v, color;
+    cv::threshold(hsv_channels[0], hsv_hl, 100, 255, cv::THRESH_BINARY);
+    cv::threshold(hsv_channels[0], hsv_hh, 119, 255, cv::THRESH_BINARY_INV);
+    cv::threshold(hsv_channels[1], hsv_s, 43, 255, cv::THRESH_BINARY);
+    cv::threshold(hsv_channels[2], hsv_v, 80, 255, cv::THRESH_BINARY);
     
-    const cv::Scalar hsvGreyLo(  0,  0,  46);
-    const cv::Scalar hsvGreyHi(180, 43, 220);
+    cv::Mat binImage;
+    cv::threshold(grayImage, binImage, 100, 255, cv::THRESH_OTSU);
+    color = hsv_hl & hsv_hh & hsv_s & binImage;
     
-    const cv::Scalar hsvWhiteLo(  0,  0,  221);
-    const cv::Scalar hsvWhiteHi(180, 30, 255);
+    cv::Mat closeImage;
+    cv::Mat kernel = getStructuringElement(cv::MORPH_RECT, cv::Size(5, 5), cv::Point(-1, -1));
+    cv::morphologyEx(color, closeImage, cv::MORPH_OPEN, kernel, cv::Point(-1, -1), 2);
     
-    const cv::Scalar hsvRedLo( 0,  43,  46);
-    const cv::Scalar hsvRedHi(10, 255, 255);
+    cv::add(bgr_channels[0], closeImage, bgr_channels[0]);
+    cv::add(bgr_channels[1], closeImage, bgr_channels[1]);
+    cv::add(bgr_channels[2], closeImage, bgr_channels[2]);
     
-    const cv::Scalar hsvOrangeLo(11,  43,  46);
-    const cv::Scalar hsvOrangeHi(25, 255, 255);
-    
-    const cv::Scalar hsvYellowLo(26,  43,  46);
-    const cv::Scalar hsvYellowHi(34, 255, 255);
-    
-    const cv::Scalar hsvGreenLo(35,  43,  46);
-    const cv::Scalar hsvGreenHi(77, 255, 255);
-    
-    const cv::Scalar hsvCyanLo(78,  43,  46);
-    const cv::Scalar hsvCyanHi(99, 255, 255);
-    
-    const cv::Scalar hsvBlueLo(100,  43,  46);
-    const cv::Scalar hsvBlueHi(124, 255, 255);
-    
-    const cv::Scalar hsvPurpleLo(125,  43,  46);
-    const cv::Scalar hsvPurpleHi(155, 255, 255);
-    
-    std::vector<cv::Scalar> hsvLo{hsvBlackLo,hsvGreyLo,hsvWhiteLo,hsvRedLo,
-                        hsvOrangeLo,hsvYellowLo,hsvGreenLo,hsvCyanLo,
-                        hsvBlueLo,hsvPurpleLo};
-    std::vector<cv::Scalar> hsvHi{hsvBlackHi,hsvGreyHi,hsvWhiteHi,hsvRedHi,
-                        hsvOrangeHi,hsvYellowHi,hsvGreenHi,hsvCyanHi,
-                        hsvBlueHi,hsvPurpleHi};
-    cv::Mat imgThresholded;
-    cv::inRange(hsvImage, hsvLo[1], hsvHi[1],imgThresholded);
-    
-    int erosion_type;
-    int erosion_elem = 0;
-    int erosion_size = 0;
-    if( erosion_elem == 0 ){ erosion_type = cv::MORPH_RECT; }
-    else if( erosion_elem == 1 ){ erosion_type = cv::MORPH_CROSS; }
-    else if( erosion_elem == 2) { erosion_type = cv::MORPH_ELLIPSE; }
-    
-    cv::Mat erosionElement = getStructuringElement( erosion_type,
-                                            cv::Size( 2*erosion_size + 1, 2*erosion_size+1 ),
-                                            cv::Point( erosion_size, erosion_size ) );
-    
-    // 腐蚀操作
-    cv::Mat imgEroded;
-    cv::erode(imgThresholded, imgEroded, erosionElement);
-    
-    int dilation_type;
-    int dilation_elem = 0;
-    int dilation_size = 0;
-    if( dilation_elem == 0 ){ dilation_type = cv::MORPH_RECT; }
-    else if( dilation_elem == 1 ){ dilation_type = cv::MORPH_CROSS; }
-    else if( dilation_elem == 2) { dilation_type = cv::MORPH_ELLIPSE; }
-    
-    cv::Mat dilationElement = getStructuringElement( dilation_type,
-                                        cv::Size( 2*dilation_size + 1, 2*dilation_size+1 ),
-                                        cv::Point( dilation_size, dilation_size ) );
-    //膨胀操作
-    cv::Mat imgdilated;
-    dilate(imgEroded, imgdilated, dilationElement);
-    
-    
-    std::vector<cv::Mat> v;
-    cv::split(imgdilated,v);
-
-    //遍历替换
-    int nl = imgdilated.rows;
-    int nc = imgdilated.cols;
-    int step = 10;
-    for(int j = 0; j < nl; j++)
-    {
-        for(int i = 0; i < nc; i++)
-        {
-            //以H.S两个通道做阈值分割，把灰替换成蓝色
-            if((v[0].at<uchar>(j,i))<=(0) && v[0].at<uchar>(j,i)>=(180)
-               &&(v[1].at<uchar>(j,i))<=(46) && v[1].at<uchar>(j,i)>=(250))
-            {
-                //cout<<int(v[0].at<uchar>(j,i))<<endl;
-                //红色底
-                //v[0].at<uchar>(j,i)=0;
-                //白色底
-                //v[0].at<uchar>(j,i)=0;
-                //v[1].at<uchar>(j,i)=0;  //V[0]和V[1]全调成0就是变成白色
-                //绿色底
-                //v[0].at<uchar>(j,i)=60;
-                //蓝色底
-                v[0].at<uchar>(j,i)=120;
-                /*cout<<int(v[0].at<uchar>(j,i))<<endl;*/
-            }
-        }
-    }
-    cv::Mat finImg;
-    cv::merge(v,finImg);
-    cv::Mat rgbImg;
-    cv::cvtColor(finImg,rgbImg, cv::COLOR_HSV2BGR); //将图像转换回RGB空间
-    //加个滤波把边缘部分的值滤掉（此处应该用低通滤波器，但感觉不太好，还是不用了。）
-    cv::Mat result;
-    GaussianBlur(rgbImg,result,cv::Size(3,3),0.5);
-    cv::waitKey(0);
-    UIImage* finishImage = MatToUIImage(result);
+    cv::Mat retImage;
+    cv::merge(bgr_channels, retImage);
+    GaussianBlur(retImage, retImage, cv::Size(7, 7), 1);
+    //resize(result, result, Size(295, 413));
+    UIImage* finishImage = MatToUIImage(retImage);
     
     if(_delegate && [_delegate respondsToSelector:@selector(photoRet:withImage:)])
     {
         [_delegate photoRet:0 withImage:finishImage];
     }
+    /*
+     const cv::Scalar hsvBlackLo(  0,  0,  0);
+     const cv::Scalar hsvBlackHi(185, 255, 46);
+     
+     const cv::Scalar hsvGreyLo(  0,  0,  46);
+     const cv::Scalar hsvGreyHi(180, 43, 220);
+     
+     const cv::Scalar hsvWhiteLo(  0,  0,  221);
+     const cv::Scalar hsvWhiteHi(180, 30, 255);
+     
+     const cv::Scalar hsvRedLo( 0,  43,  46);
+     const cv::Scalar hsvRedHi(10, 255, 255);
+     
+     const cv::Scalar hsvOrangeLo(11,  43,  46);
+     const cv::Scalar hsvOrangeHi(25, 255, 255);
+     
+     const cv::Scalar hsvYellowLo(26,  43,  46);
+     const cv::Scalar hsvYellowHi(34, 255, 255);
+     
+     const cv::Scalar hsvGreenLo(35,  43,  46);
+     const cv::Scalar hsvGreenHi(77, 255, 255);
+     
+     const cv::Scalar hsvCyanLo(78,  43,  46);
+     const cv::Scalar hsvCyanHi(99, 255, 255);
+     
+     const cv::Scalar hsvBlueLo(100,  43,  46);
+     const cv::Scalar hsvBlueHi(124, 255, 255);
+     
+     const cv::Scalar hsvPurpleLo(125,  43,  46);
+     const cv::Scalar hsvPurpleHi(155, 255, 255);
+     */
 }
 
 @end
